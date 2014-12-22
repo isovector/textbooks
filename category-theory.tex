@@ -33,11 +33,14 @@ A textbook project for learning Category Theory.
 
 \subsection{What is a Category?}
 
-A Category is a collection of objects and arrows, with some additional constraint on what it means to be an object and arrow:
+A Category is a collection of objects and arrows, with some additional constraint on what it means to be an object and
+arrow:
 
 \begin{itemize}
-\item \textbf{Object}: an element of the Category -- something which is operated upon. For the most part, objects are black boxes and never analyzed themselves. Objects must have a notion of \textit{identity}.
-\item \textbf{Arrow}: a relationship between two objects. Arrows may be composed with one another in the usual means of function composition 
+\item \textbf{Object}: an element of the Category -- something which is operated upon. For the most part, objects are
+    black boxes and never analyzed themselves. Objects must have a notion of \textit{identity}.
+\item \textbf{Arrow}: a relationship between two objects. Arrows may be composed with one another in the usual means of
+    function composition
 \begin{align*}
 A, B, C &\in \cat{C} \\
 f: A &\to B \\
@@ -45,24 +48,28 @@ g: B &\to C \\
 \\
 g \circ f: A &\to C
 \end{align*}
-. In order to satisfy the identity constraint for objects, every object must have a trivial identity arrow $$id_A: A \to A \qquad \forall A \in \cat{C}$$
+. In order to satisfy the identity constraint for objects, every object must have a trivial identity arrow
+$$id_A: A \to A \qquad \forall A \in \cat{C}$$
 \end{itemize}
 
 \subsection{Diagrams}
 
-Category Theory is most often represented by so-called commutative diagrams (even in the case that they do not commute; see the next section), a graph which consist of consistently labeled (an edge of type $A \to B$ must be drawn between nodes $A$ and $B$) vertices and directed edges.
+Category Theory is most often represented by so-called commutative diagrams (even in the case that they do not commute;
+see the next section), a graph which consist of consistently labeled (an edge of type $A \to B$ must be drawn between
+nodes $A$ and $B$) vertices and directed edges.
 
-These diagrams represent objects by their identifiers, with the arrows drawn between them. For example, the category defined above to illustrate arrow composition (though the diagram itself does not imply anything of the sort) might be drawn as
-\diag{
-A @>>> B @>>> C
-}
-. This method is used both for conciseness and for easier reasoning of category theoretical arguments (draw similarities to combinatoric diagrams). 
+These diagrams represent objects by their identifiers, with the arrows drawn between them. For example, the category
+defined above to illustrate arrow composition (though the diagram itself does not imply anything of the sort) might be
+drawn as \diag{ A @>>> B @>>> C }. This method is used both for conciseness and for easier reasoning of category
+theoretical arguments (draw similarities to combinatoric diagrams).
 
 \subsection{Commutativity}
 
-\defn{commutativity}{A diagram is said to \textit{commute} iff for all possibilities of arrow composition from object $A \in \cat{C}$ to object $B \in \cat{C}$ are equivalent.}
+\defn{commutativity}{A diagram is said to \textit{commute} iff for all possibilities of arrow composition from object $A
+\in \cat{C}$ to object $B \in \cat{C}$ are equivalent.}
 
-From hereon out, we will only denote the category being acted upon if it can not be determined unambiguously from context.
+From hereon out, we will only denote the category being acted upon if it can not be determined unambiguously from
+context.
 
 Consider the diagram:
 $$\begin{tikzcd}
@@ -72,15 +79,19 @@ B \cdr{b} & B'
 
 This diagram commutes because $g\circ a = b\circ f$, and there are no other paths from $A$ to $B'$.
 
-Commutative structures can be combined with one another, and the resulting structure is commutative itself. Consider concatenating the diagram above with itself:
+Commutative structures can be combined with one another, and the resulting structure is commutative itself. Consider
+concatenating the diagram above with itself:
 $$\begin{tikzcd}
 A \cdr{a_1} \cdd{f} & A' \cdr{a_2} \cdd{g} & A'' \cdd{h} \\
 B \cdr{b_1} & B' \cdr{b_2} & B''
 \end{tikzcd}$$
 
-It is clear from the diagram that $b_2\circ b_1\circ f = b_2\circ g\circ a_1 = h\circ a_2 \circ a_1$, therefore every composition of arrows from $A$ to $B''$ is equivalent. It is here that the strength of the diagram notation becomes evident: commutativity is easily visible.
+It is clear from the diagram that $b_2\circ b_1\circ f = b_2\circ g\circ a_1 = h\circ a_2 \circ a_1$, therefore every
+composition of arrows from $A$ to $B''$ is equivalent. It is here that the strength of the diagram notation becomes
+evident: commutativity is easily visible.
 
-\textbf{Note:} Commutivity implies only that all composition of arrows is the same arrow, not that each individual component arrow is equal. For example, if the following diagram commutes:
+\textbf{Note:} Commutivity implies only that all composition of arrows is the same arrow, not that each individual
+component arrow is equal. For example, if the following diagram commutes:
 
 $$\begin{tikzcd}
 A \cdr{g} \cdd{h} & B \cdd{f} \\
@@ -96,7 +107,8 @@ Arrows are also known as morphisms.
 
 \subsubsection{Monomorphism}
 
-\defn{monomorphic}{An arrow $f$ is said to be \what (or \textit{monic}) if it implies that $g = h$ in the following diagram
+\defn{monomorphic}{
+    An arrow $f$ is said to be \what (or \textit{monic}) if it implies that $g = h$ in the following diagram
 }
 $$\begin{tikzcd}
 A \cdr{g} \cdd{h} & B \cdd{f} \\
@@ -107,7 +119,9 @@ Monomorphisms are important because they allow left-canceling of composition in 
 
 \subsubsection{Epimorphism}
 
-\defn{epimorphism}{An arrow $f$ is said to be \textit{epimorphic} (or \textit{epic}) if it implies that $g = h$ in the following diagram
+\defn{epimorphism}{
+    An arrow $f$ is said to be \textit{epimorphic} (or \textit{epic}) if it implies that $g = h$ in the following
+    diagram
 }
 $$\begin{tikzcd}
 A \cdr{f} \cdd{f} & B \cdd{g} \\
@@ -118,16 +132,22 @@ Epimorphisms allow for right-canceling in composition of equalities.
 
 \subsubsection{Isomorphism}
 
-\defn{isomorphism}{Two objects $A, B \in \cat{C}$ are said to be \textit{isomorphic} to one another iff there exists arrows $f, g \in \cat{C}$ such that $g\circ f = id_A$ and $f\circ g = id_B$. }
+\defn{isomorphism}{
+    Two objects $A, B \in \cat{C}$ are said to be \textit{isomorphic} to one another iff there exists arrows $f, g \in
+    \cat{C}$ such that $g\circ f = id_A$ and $f\circ g = id_B$.
+}
 
-An isomorphism is both monic and epic, though it is \textbf{not} necessarily the case that a monic and epic arrow is an isomorphism.
+An isomorphism is both monic and epic, though it is \textbf{not} necessarily the case that a monic and epic arrow is an
+isomorphism.
 
 
 \subsection{Initial and Terminal Objects}
 
-\defn{initial object}{An \what is an object with exactly one arrow to every other object in the category. It is identified by the identifier 0, and its arrows are identified as "!" to highlight their uniqueness.}
+\defn{initial object}{An \what is an object with exactly one arrow to every other object in the category. It is
+identified by the identifier 0, and its arrows are identified as "!" to highlight their uniqueness.}
 
-\defn{terminal object}{Likewise, a \what is an object with exactly one arrow from every other object in the category. It is identified as 1, and also uses "!" for its arrows.}
+\defn{terminal object}{Likewise, a \what is an object with exactly one arrow from every other object in the category. It
+is identified as 1, and also uses "!" for its arrows.}
 
 \defn{zero object}{An object which is both initial and final is a \what.}
 
@@ -140,17 +160,19 @@ $$\begin{tikzcd}
 A & & B
 \end{tikzcd}$$
 
-We can create a product object $A\times B \in \cat{C}$ with a unique construction arrow $p: X \to A\times B$ as follows $$p = (f, g) .$$
-Such an object will complete the above diagram into two commutative triangles:
+We can create a product object $A\times B \in \cat{C}$ with a unique construction arrow $p: X \to A\times B$ as follows
+$$p = (f, g) .$$ Such an object will complete the above diagram into two commutative triangles:
 
 $$\begin{tikzcd}
 \phantom{} & \arrow[swap]{dl}{f} X \arrow[dashed]{d}{p} \arrow{dr}{g} & \\
 A & \cdl{\pi_1} A \times B \cdr{\pi_2} & B
 \end{tikzcd}$$
 
-The original functions $f, g$ can be seen to be equivalent to $f = \pi_1 \circ p$ and $g = \pi_2 \circ p$, where $\pi_1$ is the first projection operator.
+The original functions $f, g$ can be seen to be equivalent to $f = \pi_1 \circ p$ and $g = \pi_2 \circ p$, where $\pi_1$
+is the first projection operator.
 
-It can  be shown that any other object which completes this diagram must be equal up to isomorphism to the product object; this is what makes the product a universal construction.
+It can  be shown that any other object which completes this diagram must be equal up to isomorphism to the product
+object; this is what makes the product a universal construction.
 
 This can be generalized to the $\Pi$ operator, which behaves exactly how it does in algebra.
 
@@ -177,7 +199,8 @@ The coproduct is the dual of the product.
 
 \subsection{Universal Constructions}
 
-\defn{universal construction}{A \what is the terminal object of a category of \todo{is this true?}{diagrams} with a special structure. This special structure is called a \textit{universal property}.}
+\defn{universal construction}{A \what is the terminal object of a category of \todo{is this true?}{diagrams} with a
+special structure. This special structure is called a \textit{universal property}.}
 
 \subsubsection{Equalizers}
 
@@ -188,7 +211,7 @@ The coproduct is the dual of the product.
 A pullback is the universal construction of any $X$ that makes the following diagram commute:
 
 $$\begin{tikzcd}
-X \arrow{drr}{j} \arrow[swap]{ddr}{i} & & \\ 
+X \arrow{drr}{j} \arrow[swap]{ddr}{i} & & \\
  & & B \cdd{g} \\
  & A \cdr{f} & C
 \end{tikzcd}$$
@@ -196,12 +219,13 @@ X \arrow{drr}{j} \arrow[swap]{ddr}{i} & & \\
 The terminal object of this category is $P$:
 
 $$\begin{tikzcd}
-X \arrow{drr}{j} \arrow[swap]{ddr}{i} \arrow[dashed,swap]{dr}{k} & & \\ 
+X \arrow{drr}{j} \arrow[swap]{ddr}{i} \arrow[dashed,swap]{dr}{k} & & \\
  & P \cdr{f'} \cdd{g'} & B \cdd{g} \\
  & A \cdr{f} & C
 \end{tikzcd}$$
 
-Indeed, it can be seen that $P$ is simply a generalization of the product $A \times B$, and said product can be obtained when $C$ is the terminal object.
+Indeed, it can be seen that $P$ is simply a generalization of the product $A \times B$, and said product can be obtained
+when $C$ is the terminal object.
 
 For this reason, the pullback can be thought of as a product with extra structure.
 
@@ -211,7 +235,8 @@ The pullback itself is a special case of a more general construction: the limit.
 
 But first, we must know about cones:
 
-\defn{cone}{A \what is functor mapping an object $X$ from a category $\cat{c}$ into a diagram $D$ in $\cat{C}$. It must have an arrow from $X$ to every object in $D$.}
+\defn{cone}{A \what is functor mapping an object $X$ from a category $\cat{c}$ into a diagram $D$ in $\cat{C}$. It must
+have an arrow from $X$ to every object in $D$.}
 
 A \textit{limit} is a final object in the category of cones on the diagram $D$.
 
@@ -229,7 +254,8 @@ $$\begin{tikzcd}
 A & & B
 \end{tikzcd}$$
 
-Notice that a terminal object in this category of cones (aka the limit $L$ of the diagram) would necessarily have the form:
+Notice that a terminal object in this category of cones (aka the limit $L$ of the diagram) would necessarily have the
+form:
 
 $$\begin{tikzcd}
 {} & X \arrow[swap]{ddl}{f_a} \arrow{ddr}{f_b} \arrow[dashed]{d}{k} & \\
@@ -252,7 +278,7 @@ Exponentiation represents a category-theoretical framework for the notion of cur
 $B^A$ is defined as an object representing all morphisms in the category with domain $A$ and codomain $B$:
 $$B^A = \{f: A \to B\}$$.
 
-There is a universal property representing this fact: 
+There is a universal property representing this fact:
 
 $$\begin{tikzcd}
 B^A \times A \arrow{r}{eval} & B \\
@@ -261,6 +287,8 @@ C \times A \arrow[dashed]{u}{curry} \arrow[swap]{ur}{g} &
 
 More formally, $\mathit{curry}$ should be labeled as $\mathit{curry}(g) \times \mathit{id}_A$.
 
-The insight here is that $g$ is a function which takes two arguments. $\mathit{curry}$ encodes the value $c \in C$ into a function object representing the currying: $B^A$, which when crossed with an $A$ provides the evaluation of $g: C\times A \to B$.
+The insight here is that $g$ is a function which takes two arguments. $\mathit{curry}$ encodes the value $c \in C$ into
+a function object representing the currying: $B^A$, which when crossed with an $A$ provides the evaluation of $g:
+C\times A \to B$.
 
 \end{document}

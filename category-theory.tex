@@ -1,0 +1,161 @@
+\documentclass[]{article}
+\usepackage{amsmath,amscd}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{todonotes}
+\usepackage{tikz-cd}
+\usepackage{calligra}
+\DeclareMathAlphabet{\catty}{T1}{calligra}{m}{n}
+
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}{Definition}
+
+\newcommand{\what}{}
+% \newcommand{\cat}[1]{\mathbf{#1}}
+\newcommand{\defn}[2]{
+\renewcommand{\what}{\textit{#1} }
+\textbf{Definition:} #2\\
+}
+\newcommand{\diag}[1]{$$\begin{CD}#1\end{CD}$$}
+\newcommand{\cdr}[1]{\arrow[swap]{r}{#1}}
+\newcommand{\cdl}[1]{\arrow{l}{#1}}
+\newcommand{\cdd}[1]{\arrow{d}{#1}}
+\newcommand{\cdu}[1]{\arrow{u}{#1}}
+
+\newcommand{\tfarr}[3]{\ensuremath{#1 : #2 \to #3}}
+\newcommand{\functor}[3]{\ensuremath{#1 : \cat{#2} \to \cat{#3}}}
+\newcommand{\cat}[1]{\ensuremath{\!\! \catty{#1} \,\,}}
+
+%opening
+\title{Category Theory}
+\author{Sandy Maguire}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+My notes summarizing Awodey for the purposes of learning Category Theory. It's
+going to be a great project.
+\end{abstract}
+
+\newpage
+
+\section{Foundations}
+
+\subsection{Definition of a Category}
+
+A category \cat{C} consists of \textbf{objects} and \textbf{arrows} between
+them. To be precise, every arrow has a domain and a codomain, both of which are
+objects in the category. In addition, every object $X \in \cat{C}$ has an
+\textbf{identity arrow} \tfarr{1_X}{X}{X}.
+
+If \tfarr{f}{A}{B}, we say $dom(f) = A$ and $cod(f) = B$.
+
+In addition, to be a category, \cat{C} must respect the following laws:
+
+\begin{enumerate}
+  \item{Composition: If \tfarr{f}{A}{B} and \tfarr{g}{B}{C}, there exists an
+    arrow \tfarr{g \circ f}{A}{C}.}
+  \item{Associative: $f \circ (g \circ h) = (f \circ g) \circ h$}.
+  \item{Identity: $1_B \circ f = f = f \circ 1_A$, given \tfarr{f}{A}{B}}
+\end{enumerate}
+
+Anything that satisfies these laws is a category. It need not correspond to our
+intuitions that "arrows are functions" or any such silliness.
+
+\subsection{Definition of a Functor}
+
+A functor \functor{F}{C}{D} is a mapping of objects in \cat{C} to objects in
+\cat{D}, and likewise for arrows. A functor is a homomorphism across domains,
+codomains and compositions.
+
+That is to say:
+
+\begin{enumerate}
+  \item{$F(\tfarr{f}{A}{B}) = \tfarr{F(f)}{F(A)}{F(B)}$}
+  \item{$F(g\circ f) = F(g) \circ F(f)$}
+  \item{$F(1_A) = 1_{F(A)}$}
+\end{enumerate}
+
+There is an identity functor \functor{1_{\cat{C}}}{C}{C}, and because functors
+compose, we have a category of categories: \cat{Cat}.
+
+\subsection{Definition of an Isomorphism}
+
+An arrow \tfarr{f}{A}{B} is called an isomorphism if there exists an arrow
+\tfarr{g}{B}{A} such that $g \circ f = 1_A$ and $f \circ g = 1_B$.
+
+\begin{theorem}
+Isomorphisms are unique.
+\begin{proof}
+  For \tfarr{f}{A}{B} to be an isomorphism, we must have \tfarr{g}{B}{A}. Assume
+  that the isomorphism is not unique, and thus that we also have
+  \tfarr{g'}{B}{A}.
+
+  By definition, we have $g \circ f = 1_A$. We can compose on both sides to get
+  $g \circ f \circ g' = 1_A \circ g'$, but recall that $g'$ is an isomorphism,
+  therefore $g \circ 1_B = 1_A \circ g'$. We can emit the identities, and thus
+  $g = g'$.
+\end{proof}
+\end{theorem}
+
+\begin{definition}
+  A \textbf{group} is a single object category where every arrow is an
+  isomorphism.
+\end{definition}
+
+\section{Constructions on Categories}
+
+\subsection{Product Category}
+
+The product of categories \cat{C} and \cat{D} is $\cat{C}\times\cat{D}$. It's
+objects are the cartesian product of objects in \cat{C} and \cat{D}. Arrows are
+likewise defined in this matter, with composition and units being defined
+component-wise:
+
+\begin{align*}
+  1_{(C, D)} &= (1_C, \; 1_D) \\
+  (f', g') \circ (f, g) &= (f' \circ f, \; g' \circ g)
+\end{align*}
+
+There are also projection functors
+$\functor{\pi_1}{\cat{C}\times\cat{D}}{\cat{C}}$ and
+$\functor{\pi_2}{\cat{C}\times\cat{D}}{\cat{C}}$ defined in the obvious way.
+
+\subsection{Arrow Category}
+
+The arrow category $\cat{C}^\rightarrow$ has objects which are arrows in \cat{C}
+and its arrows are commutative squares in \cat{C}.
+
+For example, given $f,\;f',\;g_1,\;g_2 \in \cat{C}$, there is an arrow $\tfarr{g
+}{f}{f'} \in \cat{C}^\rightarrow$ such that $g = (g_1,\;g_2)$ if the follow
+diagram exists in \cat{C}:
+
+$$\begin{tikzcd}
+  A \cdr{g_1} \cdd{f} & A' \cdd{f'} \\
+  B \cdr{g_2} & B'
+\end{tikzcd}$$
+
+Composition acts as you'd expect. Given $h \circ g$, we get the diagram:
+
+$$\begin{tikzcd}
+  A \cdr{g_1} \cdd{f} & A' \cdr{h_1} \cdd{f'} & A'' \cdd{f''}  \\
+  B \cdr{g_2} & B' \cdr{h_2} & B''
+\end{tikzcd}$$
+
+In other words, there is an arrow $f\to f'$ iff $g_2\circ f = f' \circ g_1$. But
+what does this mean?
+
+In a monoid, composition means concatenation, and thus over a free monoid of the
+alphabet, $f = \text{art}$, $f' = \text{far}$, $g = (\text{t}, \text{f})$
+because $\text{f}\circ\text{art} = \text{far}\circ\text{t}$. With the monoid of
+addition over the natural numbers, the arrow category is complete; all objects
+have infinite arrows between them because there are infinite ways of adding two
+numbers to two numbers and having them equate.
+
+\end{document}

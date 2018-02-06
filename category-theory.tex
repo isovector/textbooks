@@ -9,6 +9,8 @@
 
 \usepackage [english]{babel}
 \usepackage [autostyle, english = american]{csquotes}
+\usepackage{fancyvrb}
+\DefineVerbatimEnvironment{code}{Verbatim}{fontsize=\small}
 \MakeOuterQuote{"}
 
 \newtheorem{theorem}{Theorem}
@@ -22,6 +24,9 @@
 }
 \newcommand{\diag}[1]{$$\begin{CD}#1\end{CD}$$}
 \newcommand{\cdr}[1]{\arrow[swap]{r}{#1}}
+\newcommand{\cdrr}[1]{\arrow[swap]{rr}{#1}}
+\newcommand{\cddl}[1]{\arrow{dl}{#1}}
+\newcommand{\cddr}[1]{\arrow[swap]{dr}{#1}}
 \newcommand{\cdl}[1]{\arrow{l}{#1}}
 \newcommand{\cdd}[1]{\arrow{d}{#1}}
 \newcommand{\cdu}[1]{\arrow{u}{#1}}
@@ -109,6 +114,22 @@ Isomorphisms are unique.
   isomorphism.
 \end{definition}
 
+\begin{theorem}
+Every group $G$ is isomorphic to a group of permutations.
+\begin{proof}
+  Define $f_g(x) = g \times x$ for $g \in G$. Since $G$ is a group, we also have
+  $f_{g^{-1}}(x) = g^{-1} \times x = f_g^{-1}(x)$ which means $(f_g \circ
+  f_g^{-1})(x) = (f_g^{-1} \circ f_g)(x) = x$. Therefore $f_g$ forms a group.
+
+  Consider now a function $\tfarr{T}{G}{\bar{G}}$ where $T(g) = f_g$.  $T$ is a
+  group homomorphism because $(f_g \circ f_h)(x) = f_g(f_h(x)) = f_g(h * x) = g
+  * (h * x) = f_{g*h}(x)$.
+
+  This is true for any $x$, therefore $T(g) \circ T(h) = f_g \circ f_h = f_{g*h}
+  = T(g * h)$
+\end{proof}
+\end{theorem}
+
 \section{Constructions on Categories}
 
 \subsection{Product Category}
@@ -158,6 +179,7 @@ addition over the natural numbers, the arrow category is complete; all objects
 have infinite arrows between them because there are infinite ways of adding two
 numbers to two numbers and having them equate.
 
+
 \todo{more examples plz}
 \todo{what are the functors?}
 
@@ -165,5 +187,68 @@ numbers to two numbers and having them equate.
 
 The slice category $\cat{C}/X$, given $X \in \cat{C}$ is a special case of the
 arrow category when $B = B' = X$.
+
+\subsubsection{Principal Ideal}
+
+Awodey gives the example of the slice $\cat{P}/P$ over a poset category for some
+$P \in \cat{P}$, that this is isomorphic to the principal ideal
+$\downarrow\!(P)$. What the heck does this mean? Well, let's draw the diagram:
+cdd
+$$\begin{tikzcd}
+  A \cdrr{f} \cddr{!} & & A' \cddl{!} \\
+  & P &
+\end{tikzcd}$$
+
+In a poset category, we can consider an arrow to be $\le$, therefore, in
+$\cat{P}/P$ there is an arrow $\tfarr{f}{A}{A'}$ whenever $A \le A' \le P$.
+Therefore, the principal ideal $\downarrow\!(P)$ is just the subset of the poset
+that is $\le P$.
+
+\subsubsection{Slice of a Monoid}
+
+Out of curiosity, let's look at the slice $\;\cat{M}/M$ over some monoidal
+category where $M \in \cat{M}$.
+
+$$\begin{tikzcd}
+  M \cdrr{f} \cddr{g_1} & & M \cddl{g_2} \\
+  & M &
+\end{tikzcd}$$
+
+We can pull equations out of this diagram, namely that $g_1 = g_2 \circ f$. The
+arrows in $\;\cat{M}/M$ are therefore the elements which can be "decomposed"
+into the concatenation of two elements. However, because $\;\cat{M}$ is a
+monoidal category, all elements can be decomposed (by factoring out a unit).
+Therefore, $\;\cat{M}/M \cong \cat{M}$.
+
+\subsubsection{Coslice Category}
+
+We can define the coslice category $X/\cat{C}$, given $X \in \cat{C}$ by looking
+at $(\cat{C}/X)^{Op}$. This is obviously a special case of the arrow category
+when $A = A' = X$.
+
+The coslice of a poset is its $\uparrow\!(X)$, and the coslice of a monoidal
+category is still isomorphic to the category itself.
+
+Awodey points out that $1/\cat{Set}$ is isomorphic to the category of pointed
+sets, where each set has a distinguished member called the "point" (recall that
+$\text{Maybe}$ is the free pointed set). Arrows in $1/\cat{Set}$ are
+homomorphisms which preserve the points.
+
+\subsection{Free Monoids}
+
+Given a set $S = \{s_1, s_2, \dots, s_n \}$ of "letters", define $S^* =
+\{\text{words over } S\}$, in other words, every finite sequence of letters in
+$S$. The empty word can be denoted as -. $S^*$ forms a monoid under
+concatenation with - as its unit.
+
+We have an insertion function $i(s) = s : S \hookrightarrow S^*$. The elements
+of $S$ generate $S^*$, because every $s \in S^*$ can be made up of some
+concatenation of $s_{i1}s_{i2}\dots s_{in}$.
+
+$S^*$ is said to be the free monoid over $S$ because it generates a monoid even
+when $S$ itself is not one.
+
+But we can state this definition more "categorically" by way of a
+\textit{universal mapping property}.
 
 \end{document}

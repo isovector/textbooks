@@ -24,12 +24,15 @@
 }
 \newcommand{\diag}[1]{$$\begin{CD}#1\end{CD}$$}
 \newcommand{\cdr}[1]{\arrow[swap]{r}{#1}}
+\newcommand{\cdrn}[1]{\arrow[swap,dotted]{r}{#1}}
 \newcommand{\cdrr}[1]{\arrow[swap]{rr}{#1}}
 \newcommand{\cddl}[1]{\arrow{dl}{#1}}
 \newcommand{\cddr}[1]{\arrow[swap]{dr}{#1}}
 \newcommand{\cdl}[1]{\arrow{l}{#1}}
 \newcommand{\cdd}[1]{\arrow{d}{#1}}
 \newcommand{\cdu}[1]{\arrow{u}{#1}}
+
+\newcommand{\abs}[1]{\left|#1\right|}
 
 \newcommand{\tfarr}[3]{\ensuremath{#1 : #2 \to #3}}
 \newcommand{\functor}[3]{\ensuremath{#1 : \cat{#2} \to \cat{#3}}}
@@ -250,5 +253,60 @@ when $S$ itself is not one.
 
 But we can state this definition more "categorically" by way of a
 \textit{universal mapping property}.
+
+The free monoid $M(A) \in \cat{Mon}$ over $A \in \cat{Set}$ is the object with
+the property that for any $N \in \cat{Mon}$ the following diagram holds:
+
+$$\begin{tikzcd}
+  M(A) \cdrn{!} & N
+\end{tikzcd}$$
+
+\begin{theorem}
+  $M(A) = A^*$
+\begin{proof}
+  We can prove the theorem by giving a program in Haskell.
+
+  \begin{code}
+foldMap :: Monoid n => (a -> n) -> [a] -> n
+foldMap _ []       = mempty
+foldMap f (a : as) = f a `mappend` foldMap f as
+  \end{code}
+\end{proof}
+\end{theorem}
+
+Awodey says something about how the monoid of natural numbers under addition is
+isomorphic to the free monoid over a single element set. This is obviously true,
+but I'm not entirely sure what his broader argument is.
+
+\todo{page 28 -- determine what's going on here}
+
+\subsubsection{Forgetful Functors}
+
+For every structured set $Z$ (of category \cat{Z}) there is an underlying set
+$\abs{Z}$, and likewise for every homomorphism $f$ over the structured set,
+there is a corresponding homomorphism over sets $\abs{f}$. Therefore we have a
+functor $\functor{U}{Z}{Set}$ called the forgetful functor.
+
+\subsection{Free Categories}
+
+Just like how $A^* \in \cat{Mon}$ is the free monoid over $A \in \cat{Set}$,
+$Cat(G) \in \cat{Cat}$ is the free category over $G \in \cat{Graph}$ (the
+category of directed graphs.)
+
+A $Cat(G)$ can be generated from $G$ by taking every vertex $V \in G$ and making
+it an object $V \in Cat(G)$. Every path $P$ made up of a finite sequence of
+edges $E_1, E_2, \dots E_n \in G$ (where the target of $E_i$ is the source of
+$E_{i+1}$) becomes an arrow in $Cat(G)$. Add the mandatory $\tfarr{1_V}{V}{V}$
+identities, and you have yourself a category where composition of arrows is
+subsequent traversals of paths in the underlying graph.
+
+There is also \textit{universal mapping property} for free categories, namely
+that for any category $\cat{C} \in \cat{Cat}$:
+
+$$\begin{tikzcd}
+  Cat(G) \cdrn{!} & \cat{C}
+\end{tikzcd}$$
+
+\todo{prove this}
 
 \end{document}

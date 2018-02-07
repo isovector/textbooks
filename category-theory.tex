@@ -15,6 +15,7 @@
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{definition}{Definition}
+\newtheorem{exercise}{Exercise}
 
 \newcommand{\what}{}
 % \newcommand{\cat}[1]{\mathbf{#1}}
@@ -196,7 +197,7 @@ arrow category when $B = B' = X$.
 Awodey gives the example of the slice $\cat{P}/P$ over a poset category for some
 $P \in \cat{P}$, that this is isomorphic to the principal ideal
 $\downarrow\!(P)$. What the heck does this mean? Well, let's draw the diagram:
-cdd
+
 $$\begin{tikzcd}
   A \cdrr{f} \cddr{!} & & A' \cddl{!} \\
   & P &
@@ -221,7 +222,7 @@ We can pull equations out of this diagram, namely that $g_1 = g_2 \circ f$. The
 arrows in $\;\cat{M}/M$ are therefore the elements which can be "decomposed"
 into the concatenation of two elements. However, because $\;\cat{M}$ is a
 monoidal category, all elements can be decomposed (by factoring out a unit).
-Therefore, $\;\cat{M}/M \cong \cat{M}$.
+Therefore, $\;\cat{M}/M \cong\;\cat{M}$.
 
 \subsubsection{Coslice Category}
 
@@ -308,5 +309,89 @@ $$\begin{tikzcd}
 \end{tikzcd}$$
 
 \todo{prove this}
+
+\subsection{More Foundations}
+
+A category is said to be "small" iff its objects and arrows both form sets.
+Otherwise it is "large."
+
+This implies that \cat{Set} and any other structured set categories are large,
+and that \cat{Cat} is itself only the category of small categories -- and thus
+does not contain itself.
+
+However, a category \cat{C} can be said to be "locally small" iff for any
+objects $X, Y \in \cat{C}$, the set of arrows $\{f \in \cat{C}\;|\;f : X \to Y
+\}$ is a set. \cat{Set} is locally small because there is a set of all functions
+from $X \to Y$, $Y^X$. Likewise, all other structured sets share this property,
+since they are necessarily more restrictive than \cat{Set}.
+
+Awodey asks whether \cat{Cat} is locally small. My intuition is yes, because all
+of its objects are themselves small categories; therefore the collection of
+functors from one small category to another must form a set.
+
+\subsection{Exercises}
+
+\begin{exercise}
+  The objects of \cat{Rel} are sets, and an arrow \tfarr{f}{A}{B} is a relation
+  from $A$ to $B$, that is, $f \subseteq A \times B$. The identity relation
+  $\{\langle a, a\rangle \in A \times A \;|\; a \in A\}$ is the identity arrow
+  on a set $A$.  Composition in \cat{Rel} is to be given by:
+
+  $$
+  g \circ f = \{\langle a, c\rangle \in A \times C \;|\; \exists b. \langle a,b
+  \rangle \in f \;\&\; \langle b, c \rangle \in g\}
+  $$
+
+  Show that \cat{Rel} is a category.
+
+  \begin{proof}
+    We need to show that $\langle a, a\rangle$ is an identity, and that $f \circ
+    (g \circ h) = (f \circ g) \circ h$.
+
+    Given \tfarr{f}{A}{B}, we can show that $1_a = \langle a, a \rangle$ is an
+    identity:
+
+    \begin{align*}
+      f \circ 1_a &=
+  \{\langle a, b\rangle \in A \times B \;|\; \exists x. \langle x,x
+  \rangle \in 1_a \;\&\; \langle x, b \rangle \in f\} \\
+      &= \{\langle a, b\rangle \in A \times B \;|\; \langle a,a
+  \rangle \in 1_a \;\&\; \langle a, b \rangle \in f\} \\
+      &= \{\langle a, b\rangle \in A \times B \;|\;
+  \langle a, b \rangle \in f\} \\
+      &= f
+    \end{align*}
+
+    The proof that $1_b$ is a left identity proceeds in exactly the same way.
+    Therefore, the identity relation is in fact an identity on the arrows.
+
+    Finally, we need to show that composition is associative. This proceeds
+    immediately from the existential in the definition of composition which
+    asserts an equality between the (set) codomain of $f$ and the domain of $g$.
+    Because equality is associative, composition in \cat{Rel} must too be.
+  \end{proof}
+\end{exercise}
+
+\begin{exercise}
+  Determine which of the following isomorphisms hold:
+
+  \begin{enumerate}
+    \item{$\cat{Rel} \cong \cat{Rel}^{op}$}
+    \item{$\cat{Set} \cong \cat{Set}^{op}$}
+    \item{For a fixed set $X$ with powerset $P(X)$, as poset categories $P(X)
+      \cong P(x)^{op}$ (the arrows in $P(X)$ are subset inclusions $A \subseteq
+      B$ for $A, B \subseteq X$)}
+  \end{enumerate}
+
+  \begin{proof}
+    \quad
+    \begin{enumerate}
+    \item{$\cat{Rel} \cong \cat{Rel}^{op}$ because arrows compose due to an
+      existential equality. Since equality is dual to itself, these two
+      categories must be isomorphic.}
+    \item{ok}
+    \end{enumerate}
+  \end{proof}
+\end{exercise}
 
 \end{document}

@@ -32,10 +32,12 @@
 \newcommand{\cdl}[1]{\arrow{l}{#1}}
 \newcommand{\cdd}[1]{\arrow{d}{#1}}
 \newcommand{\cdu}[1]{\arrow{u}{#1}}
+\newcommand{\mono}{\rightarrowtail}
+\newcommand{\epi}{\twoheadrightarrow}
 
 \newcommand{\abs}[1]{\left|#1\right|}
 
-\newcommand{\tfarr}[3]{\ensuremath{#1 : #2 \to #3}}
+\newcommand{\tfarr}[4][\to]{\ensuremath{#2 : #3 #1 #4}}
 \newcommand{\functor}[3]{\ensuremath{#1 : \cat{#2} \to \cat{#3}}}
 \newcommand{\cat}[1]{\ensuremath{\!\! \catty{#1} \,\,}}
 
@@ -389,9 +391,89 @@ functors from one small category to another must form a set.
     \item{$\cat{Rel} \cong \cat{Rel}^{op}$ because arrows compose due to an
       existential equality. Since equality is dual to itself, these two
       categories must be isomorphic.}
-    \item{ok}
+    \item{$\cat{Set} \not\cong \cat{Set}^{op}$ because in the dual, initial
+      objects in \cat{Set} are mapped to terminal objects in $\cat{Set}^{op}$.
+        Since isomorphisms need to preserve initial objects (and other
+        interesting features of a category), these two categories are not
+        isomorphic.}
+    \item{\todo{Apparently this is in fact isomorphic to its dual, but I don't
+      know why because it seems like the \cat{Set} argument should apply here as
+        well.}}
     \end{enumerate}
   \end{proof}
 \end{exercise}
+
+\section{Abstract Structures}
+
+\subsection{Epis and Monos}
+
+A monomorphism (mono) is any morphism \tfarr[\mono]{f}{A}{B} such that for any
+\tfarr{g, h}{C}{A} the following is true: $fg = fh \implies g = h$. In other
+words, a mono is always left-cancelable.
+
+$$\begin{tikzcd}
+  C \arrow[shift right=2,swap]{r}{h} \arrow[shift left=1]{r}{g} & A \cdr{f} & B
+\end{tikzcd}$$
+
+Dually, an epimorphism (epi) is a morphism \tfarr[\epi]{f}{A}{B} such that for
+any \tfarr{i, j}{B}{D} the following is true: $if = jf \implies i = j$. An epi
+is always right-cancelable.
+
+$$\begin{tikzcd}
+  A \cdr{f} & B \arrow[shift right=2,swap]{r}{j} \arrow[shift left=1]{r}{i} & D
+\end{tikzcd}$$
+
+In \cat{Set}, monos correspond to injective functions, and epis are surjective
+functions. Furthermore, in \cat{Set} a function which is monic and epic is an
+iso, but this is \textbf{not true} in general.
+
+\begin{theorem}
+  In a poset \;\cat{P}, every arrow $p \leq q$ is both monic and epic.
+  \begin{proof}
+    In a poset, there is exactly one arrow between any two objects. Therefore if
+    two arrows are equal after composing with a third, they must have been equal
+    to begin with.
+  \end{proof}
+\end{theorem}
+
+\begin{theorem}
+  Every iso is a mono and an epi.
+  \begin{proof}
+    Given an iso \tfarr{m}{A}{B} with inverse \tfarr{e}{B}{A}:
+    \begin{align*}
+      mx &= my \\
+      emx &= emy \\
+      1_B x &= 1_B y \\
+      x &= y
+    \end{align*}
+
+    And dually to show epicness.
+  \end{proof}
+\end{theorem}
+
+\subsection{Initial and Terminal Objects}
+
+An object $0 \in \cat{C}$ is said to be initial if for every other object $X \in
+\cat{C}$ there is a unique arrow \tfarr{!}{0}{X}. Dually, a terminal object is
+one which has a unique arrow coming into it from every object in the category.
+
+\begin{theorem}
+  Initial and terminal objects are unique up to isomorphism.
+  \begin{proof}
+    Assume we have two initial objects, $X$ and $Y$. In order to be initial,
+    they must have arrows \tfarr{y}{X}{Y} and \tfarr{x}{Y}{X}. Furthermore, we
+    know that there is exactly one arrow from an initial object to any other --
+    including itself. By the category laws, this unique arrow must be 1, which
+    makes the following diagram commute:
+
+$$\begin{tikzcd}
+  X \cdr{y} \cddr{1_X} & Y \cdd{x} \arrow{dr}{1_Y} \\
+  & X \cdr{y} & Y
+\end{tikzcd}$$
+
+    This argument dualizes to terminal objects.
+
+  \end{proof}
+\end{theorem}
 
 \end{document}

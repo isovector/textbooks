@@ -541,5 +541,35 @@ An ultrafilter is a filter $F$ which is maximally big, ie. $F \subset F'
   \end{proof}
 \end{theorem}
 
+Assume now we have (multiple) arrows \tfarr{p}{B}{2}, $p \in \cat{Bool}$. These
+correspond exactly with the ultrafilters $U$ of $B$. We can get $p$ from $U$ by
+defining $p_U(b) = 1 \text{ iff } b \in U$. Likewise, we can get $U$ from $p$ by
+defining $U_p = p^{-1}(1)$ where $p^{-1}(1)$ is the domain of $p$ whose image is
+$1$. These constructions obviously form an isomorphism.
+
+The interesting part of all this jiggery-pokery is that $2 \in \cat{Bool}$ is an
+initial object, and thus these functions $p$ are in fact arrows \textit{into} an
+initial object. Awodey: "clearly only some of these will be of interest, but
+those are often especially significant."
+
+\subsubsection{Arrows out of Terminal Objects}
+
+In \cat{Set}, $X \cong \text{Hom}_{\cat{Set}}(1, X)$. This is true because
+$\abs{X^1} = \abs{X}$, and makes sense intuitively if you need to provide a
+function from a singleton to $X$, you're going to have one for each element in
+$X$. This is also true in \cat{Poset}. In any category with a terminal object,
+these arrows $1 \to A$ are called the constants or points of $A$.
+
+In \cat{Set} and \cat{Poset}, general arrows \tfarr{f}{A}{B} are uniquely
+determined by their action on the points of $A$. Which is to say that if $fa =
+f'a$ for all \tfarr{a}{1}{A}, then $f = f'$.
+
+\subsubsection{Generalized Elements}
+
+However, this is not true of all categories in general, but we can generalize
+this idea to the notion of \textit{generalized elements}.
+
+\todo{I don't understand this part. Generalized elements are like, interesting?}
 
 \end{document}
+

@@ -36,6 +36,7 @@
 \newcommand{\epi}{\twoheadrightarrow}
 
 \newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\setn}[1]{\left\{#1\right\}}
 
 \newcommand{\tfarr}[4][\to]{\ensuremath{#2 : #3 #1 #4}}
 \newcommand{\functor}[3]{\ensuremath{#1 : \cat{#2} \to \cat{#3}}}
@@ -53,6 +54,10 @@
 My notes summarizing Awodey for the purposes of learning Category Theory. It's
 going to be a great project.
 \end{abstract}
+
+\newpage
+
+\tableofcontents
 
 \newpage
 
@@ -475,5 +480,66 @@ $$\begin{tikzcd}
 
   \end{proof}
 \end{theorem}
+
+\subsection{Generalized Elements}
+
+\subsubsection{Boolean Algebras}
+
+A Boolean algebra is a poset $B$ with initial and terminal objects, products,
+coproducts, and complements, with the laws:
+
+\begin{enumerate}
+  \item{$0 \leq a$ (initial object)}
+  \item{$a \leq 1$ (terminal object)}
+  \item{$a \leq c, b \leq c \iff a \vee b \leq c$ (coproducts)}
+  \item{$c \leq a, c \leq b \iff c \leq a \wedge b$ (products)}
+  \item{$a \leq \neg b \iff a \wedge b = 0 $ (complement)}
+  \item{$\neg \neg a = a $ (complement)}
+\end{enumerate}
+
+Consider the case of a lattice:
+
+$$\begin{tikzcd}
+  & \setn{x, y, z} & \\
+  \setn{x, y} \arrow{ur} & \setn{x, z} \arrow{u} & \setn{y, z} \arrow{ul} \\
+  \setn{x} \arrow{u}\arrow{ur} & \setn{y}\arrow{ul}\arrow{ur} &
+  \setn{z}\arrow{ul}\arrow{u} \\
+  & \varnothing \arrow{ul}\arrow{u}\arrow{ur} &
+\end{tikzcd}$$
+
+We can define a complement $\neg x$ as $\setn{a\;|\;a \in B, a \not \in x}$.
+This clearly satisfies the $\neg \neg x = x$ law, and some playing around with
+the $a \leq \neg b \iff a \wedge b = 0$ law seems true, although I don't have a
+proof for it.
+
+\subsubsection{Ultrafilters}
+
+A filter $F$ in a boolean algebra $B \in \cat{Bool}$ is a subset of $B$ which is
+closed upwards and under meets (products). Which is to say:
+
+\begin{enumerate}
+  \item{$a \in F,\; a \leq b \implies b \in F$ (closed upwards)}
+  \item{$a \in F,\; b \leq F \implies a \wedge b \in F$ (closed under meets)}
+\end{enumerate}
+
+An ultrafilter is a filter $F$ which is maximally big, ie. $F \subset F'
+\implies F' = B$.
+
+\begin{theorem}
+  $F$ is an ultrafilter iff for all $x \in B$, either $x \in F$ or $\neg x \in
+  F$, but not both.
+  \begin{proof}
+    Because a filter is closed upwards, any filter which contains $0$ must equal
+    to $B$ itself, and thus not an ultrafilter.
+
+    If $x \in F$ and $\neg x \in F$, then $x \wedge \neg x \in F$ by filters
+    being closed under meets. However, $x \wedge \neg x = 0$, therefore, no
+    ultrafilter can contain $x$ and $\neg x$.
+
+    What if neither $x \in F$ nor $\neg x \in F$? This is true just if $F =
+    \varnothing$, which is obviously not maximal.
+  \end{proof}
+\end{theorem}
+
 
 \end{document}

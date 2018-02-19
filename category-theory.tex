@@ -620,5 +620,79 @@ of the shape $x \leq y$ for $x \in A,\; y \in A$.
 
 \subsection{Sections and Retractions}
 
+\begin{theorem}
+  An arrow \tfarr{f}{A}{B} has a left inverse \tfarr{g}{B}{A} (eg. $gf = 1_A$)
+  if and only if $f$ be monic, and $g$ be epic.
+
+  \begin{proof}
+    \qquad
+    \begin{align*}
+      fx &= fy \\
+      gfx &= gfy \\
+      1_A x &= 1_A y \\
+      x &= y
+    \end{align*}
+    This is the definition of a mono $f$, that for any $x,\; y$, $fx = fy
+    \implies x = y$.
+
+    Proving that $g$ is epic is equally trivial.
+  \end{proof}
+\end{theorem}
+
+\subsubsection{Splits}
+
+A split mono is an arrow with a left inverse. A split epi is one with a right
+inverse. In the mono case:
+
+\begin{align*}
+  \tfarr{s}{A}{X} &\qquad \text{($s$ is a "splitting" of $e$)} \\
+  \tfarr{e}{X}{A} &\qquad \text{($e$ is a "retraction" of $s$)} \\
+  es = 1_A &
+\end{align*}
+
+$A$ is additionally called a "retract" of $X$. The following diagram might help:
+
+$$\begin{tikzcd}
+  A \arrow{r}{s} \arrow[swap]{dr}{1_A} & X \arrow{d}{e} \\
+  & A
+\end{tikzcd}$$
+
+\todo{This terminology makes no sense to me. It seems like $X$ should be the
+thing we call a retraction?}
+
+While functors do not necessarily preserve monos and epis, they do in fact
+preserve split monos and epis, since identity is an invariant under functors.
+
+Awodey claims that "every epi splits in \cat{Set}" is equivalent to the axiom of
+choice. I have no recourse but to believe him.
+
+\subsection{Products}
+
+The product diagram:
+
+$$\begin{tikzcd}
+  & X \arrow{dl} \arrow{dr} \arrow[dotted]{d}{!} & \\
+  A & A\times B \arrow{l}{\pi_1} \arrow[swap]{r}{\pi_2} & B
+\end{tikzcd}$$
+
+\begin{theorem}
+  Products are unique up to isomorphism.
+
+  \begin{proof}
+    If both $A \times B$ and $A \times' B$ are products, then the following
+    diagram must commute:
+
+$$\begin{tikzcd}
+   & A\times B \arrow{dl} \arrow[swap]{dr} \arrow[dotted, swap, shift
+   right=1]{dd}{!} \arrow[dotted, loop left]{}{!} & \\
+  A & & B \\
+   & A\times' B \arrow{ul} \arrow[swap]{ur} \arrow[dotted, swap, shift
+   right=1]{uu}{!} \arrow[dotted, loop right]{}{!} &
+\end{tikzcd}$$
+  \end{proof}
+\end{theorem}
+
+\subsection{Hom-sets}
+
 \end{document}
 

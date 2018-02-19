@@ -37,6 +37,7 @@
 
 \newcommand{\abs}[1]{\left|#1\right|}
 \newcommand{\setn}[1]{\left\{#1\right\}}
+\renewcommand{\hom}[2]{\text{Hom}(#1,\;#2)}
 
 \newcommand{\tfarr}[4][\to]{\ensuremath{#2 : #3 #1 #4}}
 \newcommand{\functor}[3]{\ensuremath{#1 : \cat{#2} \to \cat{#3}}}
@@ -564,12 +565,60 @@ In \cat{Set} and \cat{Poset}, general arrows \tfarr{f}{A}{B} are uniquely
 determined by their action on the points of $A$. Which is to say that if $fa =
 f'a$ for all \tfarr{a}{1}{A}, then $f = f'$.
 
+In \cat{Mon}, where 1 is the poset:
+
+$$\begin{tikzcd}
+  \bullet
+\end{tikzcd}$$
+
+there are obviously $\abs{P}$ points of the form \tfarr{p}{1}{P}. Therefore, if
+two functions $f$ and $g$ agree on all the points, we must have $f = g$
+
 \subsubsection{Generalized Elements}
 
-However, this is not true of all categories in general, but we can generalize
-this idea to the notion of \textit{generalized elements}.
+However, this is not true of all categories in general. Take, for example,
+\cat{Mon}. There is only one point \tfarr{p}{1}{P} which maps the unit in 1 to
+the unit in $P$. Just because $f$ and $g$ agree on where they send the unit in
+$P$ does not mean they agree on all the other elements of $P$.
 
-\todo{I don't understand this part. Generalized elements are like, interesting?}
+We can generalize this idea of points being useful to the notion of
+\textit{generalized elements}. A generalized element is one whose domain is not
+1, but instead some arbitrary object $X \in \cat{C}$ .
+
+For example, consider the posets:
+
+$$\begin{tikzcd}
+      & B & & C \\
+  P = &   & A \arrow{ur} \arrow{ul} & \\
+      & \quad & &
+\end{tikzcd} \qquad \qquad \qquad
+\begin{tikzcd}
+     & Z \\
+  Q = & Y \arrow{u} \\
+     & X \arrow{u}
+\end{tikzcd}$$
+
+There is a bijective homomorphism \tfarr{f}{P}{Q} given by the map $f(A) \mapsto
+X$, $f(B) \mapsto Y$, $f(C) \mapsto Z$. Despite this bijection, it is clear that
+$P \not \cong Q$. We can show this via inspection of the general elements out of
+2.
+
+Generalized elements of the form \tfarr{g}{2}{P} are theorems of the shape $x
+\leq y$ for $x \in P,\; y \in P$. If $P \cong Q$, they must agree on the number
+of maps from $2$ to themselves. We can state this as $\abs{\hom{2}{P}} =
+\abs{\hom{2}{Q}}$ is a necessary (though not \textit{sufficient}) condition of
+$P \cong Q$.
+
+However, $\abs{\hom{2}{P}} = 5$ (three identities, $A\leq B$ and $A\leq C$), but
+$\abs{\hom{2}{Q}} = 6$ (three identities, $X \leq Y$, $Y \leq Z$ and $X\leq Z$.)
+Because $P$ and $Q$ do not agree on the 2-elements, it must be the case that $P
+\not \cong Q$.
+
+Awodey mentions that $T$-elements (of form \tfarr{t}{T}{A}) are "figures of
+shape $T$ in $A$." We have seen this when we noted that 2-elements were theorems
+of the shape $x \leq y$ for $x \in A,\; y \in A$.
+
+\subsection{Sections and Retractions}
 
 \end{document}
 

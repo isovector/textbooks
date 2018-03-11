@@ -37,7 +37,7 @@
 
 \newcommand{\abs}[1]{\left|#1\right|}
 \newcommand{\setn}[1]{\left\{#1\right\}}
-\renewcommand{\hom}[2]{\text{Hom}(#1,\;#2)}
+\renewcommand{\hom}[2]{\ensuremath{\text{Hom}(#1,\;#2)}}
 
 \newcommand{\tfarr}[4][\to]{\ensuremath{#2 : #3 #1 #4}}
 \newcommand{\functor}[3]{\ensuremath{#1 : \cat{#2} \to \cat{#3}}}
@@ -693,6 +693,63 @@ $$\begin{tikzcd}
 \end{theorem}
 
 \subsection{Hom-sets}
+
+Recall that we can describe the set of all arrows in a category \cat{C} of the
+form $A\to B$. This construction is called the hom-set, and is written as
+\hom{A}{B}.
+
+Now, given a function \tfarr{g}{B}{C}, we can produce the following arrow in
+\cat{Set} called \tfarr{g_*}{\hom{A}{B}}{\hom{A}{C}}.
+
+Such a thing defines a functor \functor{\hom{A}{-}}{C}{Set}, known as the.
+covariant representable functor of $A$.
+
+\begin{theorem}
+  \hom{A}{-} is a functor $\cat{C}\to\cat{Set}$.
+
+  \begin{proof}
+    First, we will need to show that the functor preserves identities:
+    $\hom{A}{1_X} = 1_{\hom{A}{X}}$
+
+    Given \tfarr{f}{A}{X}, we have:
+
+    \begin{align*}
+      \hom{A}{1_X}(f) &= 1_X \circ f \\ &= f \\ &= 1_{\hom{A}{X}}(f)
+    \end{align*}
+
+    We also must show that it preserves composition, thus:
+
+    \begin{align*}
+      \hom{A}{h \circ g}(f) &= h \circ g \circ f \\ & =h \circ (g \circ f) \\ &=
+      \hom{A}{h}(g \circ f) \\ &= \hom{A}{h}(\hom{A}{g}(f))
+    \end{align*}
+  \end{proof}
+\end{theorem}
+
+In \cat{Hask}, the covariant representable functor is the \texttt{Reader}
+functor.
+
+The construction is somewhat uninteresting, but hom-sets form products, in that
+it is trivial to construct $\hom{X}{A} \times \hom{X}{B}$ with the obvious
+product diagram. Awodey refers to this as $\upsilon_X$.
+
+\begin{definition}
+  A functor \functor{F}{C}{D} is said to \textbf{preserve binary products} iff
+  the isomorphism $F(A\times B) \cong FA \times FB$ holds.
+\end{definition}
+
+\begin{theorem}
+  If \cat{C} has products, \functor{\hom{X}{-}}{C}{Set} preserves products, for
+  all $X \in \cat{C}$.
+
+  \begin{proof}
+    We want to show there is an isomorphism $\hom{X}{A\times B}\cong
+    \hom{X}{A} \times \hom{X}{B}$.
+
+    \todo{we can just show a bijection via cardinality since these things are
+    all in set}
+  \end{proof}
+\end{theorem}
 
 \end{document}
 

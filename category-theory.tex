@@ -751,5 +751,102 @@ product diagram. Awodey refers to this as $\upsilon_X$.
   \end{proof}
 \end{theorem}
 
+
+\subsection{Exercises}
+
+\begin{exercise}
+  A function between sets is surjective if it is an epimorphism in \cat{Set}.
+
+  \begin{proof}
+    We want to show that an epimorphism in \cat{Set} cashes out as a surjective
+    function between two sets.
+
+    An epimorphism is right-cancelable, which is to say that for an epi
+    \tfarr{e}{A}{B},
+    $f\circ e = g\circ e$ implies $f = g$.
+
+    By way of contradiction, $f$ and $g$ might agree on all inputs except $x$.
+    If $x$ is not in the range of $e$, even though $f\circ e = g\circ e$, by
+    construction $f \not = g$. Therefore, the range of $e$ must be the entire
+    set $B$, which is the definition of a surjective function.
+  \end{proof}
+\end{exercise}
+
+\begin{exercise}
+  Given the commutative triangle:
+
+$$\begin{tikzcd}
+  A \arrow{r}{f} \arrow[swap]{dr}{h} & B \arrow{d}{g} \\
+  & C
+\end{tikzcd}$$
+
+\begin{enumerate}
+\item{
+    Show that $h$ is an iso if $f$ and $g$ are too.
+
+    \begin{proof}
+      If $f$ and $g$ are isos, we must have $f^{-1}$ and $g^{-1}$ with the
+      obvious identity equalities. Because the triangle commutes, $h = g\circ
+      f$, therefore we can form $h^{-1} = f^{-1}\circ g^{-1}$.
+    \end{proof}}
+
+\item{
+    Show that $f$ is monic if $h$ is monic.
+
+    \begin{proof}
+      If $h$ is monic, it means it is left-cancelable. Which means if we had
+      some other functions \tfarr{x, y}{X}{A}:
+
+$$\begin{tikzcd}
+  X \arrow[shift left=2]{d}{y} \arrow[swap, shift right=2]{d}{x} & \\
+  A \arrow{r}{f} \arrow[swap]{dr}{h} & B \arrow{d}{g} \\
+  & C
+\end{tikzcd}$$
+
+      Now, we want to know whether $fx = fy$ implies $x = y$. Well, if we have
+      $fx = fy$, we can compose with $g$ to get $gfx = gfy$. But $gf = h$, so we
+      have $hx = hy$, and because $h$ is monic, $x = y$.
+    \end{proof}}
+
+\item{
+    Show that $g$ is epic if $h$ is epic.
+    \begin{proof}
+      Trivially dual to the previous exercise.
+    \end{proof}}
+
+\item{
+    Show that just because $h$ be monic, $g$ need not be.
+    \begin{proof}
+      Let $g(x) = x\quad(\text{mod } 2)$, and $f(x) = 2x$. Therefore, $h(x) =
+      0$, which is obviously monic, but $g$ is obviously not.
+    \end{proof}}
+\end{enumerate}
+\end{exercise}
+
+
+\begin{exercise}
+  Show that for any Boolean algebra $B$, Boolean homomorphisms \tfarr{h}{B}{2}
+  correspond exactly to ultrafilters in $B$.
+  \begin{proof}
+    \todo{}
+  \end{proof}
+\end{exercise}
+
+\begin{exercise}
+  In any category with binary products, show that $A\times (B\times C) \cong
+  (A\times B)\times C$
+
+  \begin{proof}
+    By diagram chasing:
+
+$$\begin{tikzcd}
+  & A\times (B\times C) \arrow{dl} \arrow[dashed]{dd} \arrow[dashed, shift right=2]{ddr} \arrow{drr} & & \\
+  A & & B & B \times C \arrow{l} \arrow{d} \\
+  & A\times B \arrow{ul} \arrow{ur} & (A \times B) \times C \arrow[dashed,
+  shift right=2]{uul} \arrow{l} \arrow{r} \arrow[dashed]{ur} & C
+\end{tikzcd}$$
+  \end{proof}
+\end{exercise}
+
 \end{document}
 

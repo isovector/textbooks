@@ -848,5 +848,84 @@ $$\begin{tikzcd}
   \end{proof}
 \end{exercise}
 
+
+\section{Duality}
+
+\subsection{Poset Coproducts}
+
+\todo{how does this work?}
+
+\subsubsection{Rooted Poset Coproducts}
+
+Consider the category \cat{Poset_0} of posets that have a initial object.  We
+can form a more interesting coproduct here by equating their bottom elements,
+and then overlaying the posets on top of one another.
+
+$$
+A +_{\cat{Poset_0}} \!B = (A +_{\cat{Poset}} \!B)/(0_A = 0_B)
+$$
+
+$$\begin{tikzcd}
+  A &   & X\arrow{rr} &   & Y &   & A & X\arrow{r} & Y \\
+    & +_{\cat{Poset_0}} &   &   &   & = &   &   &   \\
+  0\arrow{uu} &   &   & 0\arrow{uul}\arrow{uur} &   &   &   & 0
+  \arrow{uul}\arrow{uu}\arrow{uur} &   \\
+\end{tikzcd}
+$$
+
+\subsection{Monoid Coproducts}
+
+\begin{code}
+monoidCoproduct :: (Monoid a, Monoid b) => [Either a b] -> [Either a b]
+monoidCoproduct = filter (/= mempty)
+                . join
+                . fmap mconcat
+                . groupBy (compare `on` isLeft)
+\end{code}
+
+This doesn't exactly capture the notion in \cat{Hask} due to weird functor
+instances, but essentially, you want to \texttt{mappend} subsequent
+\texttt{Left} and \texttt{Right} values, and then remove any groups that are
+just \texttt{mempty}.
+
+\subsection{Abelian Groups}
+
+\todo{what? awodey talks about free products, and how they need not be
+abelian. but then he says they need to be abelian so wtf}
+
+The construction here is pretty neat; refer to page 63.
+
+\subsection{Equalizers}
+
+In any category \cat{C}, given arrows \tfarr{f,g}{A}{B}
+
+$$\begin{tikzcd}
+  A \arrow[shift right=2,swap]{r}{g} \arrow[shift left=1]{r}{f} & B
+\end{tikzcd}$$
+
+an \textit{equalizer} of $f$ and $g$ consists of an object $E$ and an arrow
+\tfarr{e}{E}{A} such that $f\circ e = g\circ e$.
+
+Which is to say, the following diagram commutes:
+
+$$\begin{tikzcd}
+  E\arrow{r}{e} & A \arrow[shift right=1,swap]{r}{g} \arrow[shift left=1]{r}{f} & B \\
+  & & \\
+  Z \arrow[dashed]{uu}{u} \arrow[swap]{uur}{z} & &
+\end{tikzcd}$$
+
+For any arbitrary \tfarr{z}{Z}{A}, there is a unique \tfarr{u}{Z}{E} such that
+$z = e\circ u$. But what does this mean??
+
+\subsubsection{Equalizers in \cat{Set}}
+
+An equalizer in \cat{Set} between $f$ and $g$ is the contrived set $E =
+\setn{x\;|\; x \in A,\;f(x) = g(x)}$, and \tfarr[\hookrightarrow]{e}{E}{A}.
+
+\todo{what the shit does any of this mean?} "Since if $fh(z) = gh(z)$ for some
+\tfarr{h}{Z}{A}, then $h(z) \in E$ for all $z \in Z$, whence $h$ "factors
+through" the inclusion function $i$, in the sense that there is a function
+\tfarr{\bar{h}}{Z}{E} such that $i\circ\bar{h} = h$."
+
 \end{document}
 

@@ -917,15 +917,118 @@ $$\begin{tikzcd}
 For any arbitrary \tfarr{z}{Z}{A}, there is a unique \tfarr{u}{Z}{E} such that
 $z = e\circ u$. But what does this mean??
 
+\subsubsection{Kernels of Homomorhisms}
+
+Awodey says an equalizer is the generalization of the kernel of a homomorphism.
+So what's that?
+
+Assume we have groups $G$ and $H$, and a homomorphism \tfarr{f}{G}{H}.
+Furthermore, suppose that $f$ is not injective, implying $f(g_1) \mapsto h_1$
+and $f(g_2) \mapsto h_1$ for at least one pair of $g_1$, $g_2$ such that $g_1
+\not = g_2$.
+
+\begin{align*}
+  f(g_2) &= h_1 \\
+  f(g_2) \times f(g_1^{-1}) &= h_1 \times f(g_1^{-1}) \\
+  f(g_2) \times f(g_1^{-1}) &= h_1 \times h_1^{-1} \\
+  f(g_2) \times f(g_1^{-1}) &= 1_h \\
+  f(g_2 \times g_1^{-1}) &= 1_h
+\end{align*}
+
+This suggests that $f$ maps many elements in $g$ to $1_h$. The set
+$\setn{g_i\;|\;f(g_i) = 1_h}$ is said to be the \emph{kernel} of $f$ -- the
+elements in $g$ that it maps to the identity on $h$.
+
+
 \subsubsection{Equalizers in \cat{Set}}
 
 An equalizer in \cat{Set} between $f$ and $g$ is the contrived set $E =
 \setn{x\;|\; x \in A,\;f(x) = g(x)}$, and \tfarr[\hookrightarrow]{e}{E}{A}.
 
-\todo{what the shit does any of this mean?} "Since if $fh(z) = gh(z)$ for some
-\tfarr{h}{Z}{A}, then $h(z) \in E$ for all $z \in Z$, whence $h$ "factors
-through" the inclusion function $i$, in the sense that there is a function
-\tfarr{\bar{h}}{Z}{E} such that $i\circ\bar{h} = h$."
+If we have some \tfarr{z}{Z}{A} such that $fz(x)=gz(x)$ for all $x \in Z$, that
+means $z(x) \in E$ (by definition of $E$). Therefore $u = Z \hookrightarrow
+E$, and $z = eu$ for some unique $e$ (uniqueness proved later).
+
+Awodey continues: every subset $U \subseteq A$ is an equalizer of two functions.
+Let $2 = \setn{\top, \bot}$, and define a function \tfarr{\chi_U}{A}{2} given
+by:
+
+$$
+\chi_U(a) =
+\begin{cases}
+  \top & a \in U \\
+  \bot & a \not \in U
+\end{cases}
+$$
+
+which gives us an equalizer:
+
+$$\begin{tikzcd}
+  U\arrow{r}{\hookrightarrow} & A \arrow[shift right=1,swap]{rr}{\chi_U}
+  \arrow[shift left=1]{rr}{\text{const}\;\top} &  & 2 \\
+\end{tikzcd}$$
+
+This makes sense; $(\text{\texttt{const}}\;\top)(a) = \chi_u(a)$ only when
+$\chi_U(a) = \top$ (aka when $a \in U$.)
+
+Awodey concludes this section by showing an isomorphism between $\hom{A}{2}
+\cong \mathcal{P}(A)$ (ie. the powerset on $A$.) This is not an earth-shattering
+fact.
+
+\subsubsection{Equalizers are Monic}
+
+\begin{theorem}
+  In any category, if \tfarr{e}{E}{A} is an equalizer, then $e$ is monic.
+
+  \begin{proof}
+$$\begin{tikzcd}
+  E\arrow{r}{e} & A \arrow[shift right=1,swap]{r}{g} \arrow[shift left=1]{r}{f} & B \\
+  & & \\
+  Z \arrow[shift left=1]{uu}{x} \arrow[shift right=1,swap]{uu}{y} \arrow[swap]{uur}{z} & &
+\end{tikzcd}$$
+
+  An arrow $m$ is monic if $\forall x y.\; mx = my \implies x = y $. Thus we
+  want to show $ex = ey \implies x = y$. Let $z = ex = ey$.
+
+  Since $e$ equalizes $f$ and $g$, we know that $fz = fex = gex = gz$, since
+  composing any morphism before $e$ can't matter after being equalized. This
+  reduces to the diagram:
+
+$$\begin{tikzcd}
+  E\arrow{r}{e} & A \arrow[shift right=1,swap]{r}{g} \arrow[shift left=1]{r}{f} & B \\
+  & & \\
+  Z \arrow[dashed]{uu}{u}  \arrow[swap]{uur}{z} & &
+\end{tikzcd}$$
+
+  which is the universal equalizer diagram. We know $z = eu$, and since $u$ is
+  unique, $eu = ex = ey \implies u = x = y$.
+  \end{proof}
+\end{theorem}
+
+\subsection{Coequalizers}
+
+Coequalizers are the generalization of quotienting by an equivalence
+relationship. Wat?
+
+$$
+X/\!\sim\;= \setn{[x]\;|\;x \in X}
+$$
+
+where $[x] = \setn{y\;|\;y\in X, \;x \sim y}$.
+
+All of this gobbledygook is to say \texttt{groupBy} $(\sim)$. $X/\!\sim$ is the
+set of subsets of $X$ whose elements are equivalent to one another.
+
+$X/\!\sim$ is called the \emph{quotient} of $X$ by $\sim$.
+
+$$\begin{tikzcd}
+  A \arrow[shift right=1,swap]{r}{g} \arrow[shift left=1]{r}{f} & B
+  \arrow{ddr}{z} \arrow{r}{q} & Q \arrow[dashed]{dd}{u} \\
+  & & \\
+  & & Z
+\end{tikzcd}$$
+
+We know that $q$ is epic, since it is dual to the monic equalizer $e$.
 
 \end{document}
 

@@ -964,7 +964,7 @@ $$
 which gives us an equalizer:
 
 $$\begin{tikzcd}
-  U\arrow{r}{\hookrightarrow} & A \arrow[shift right=1,swap]{rr}{\chi_U}
+  U\arrow[hookrightarrow]{r} & A \arrow[shift right=1,swap]{rr}{\chi_U}
   \arrow[shift left=1]{rr}{\text{const}\;\top} &  & 2 \\
 \end{tikzcd}$$
 
@@ -1029,6 +1029,56 @@ $$\begin{tikzcd}
 \end{tikzcd}$$
 
 We know that $q$ is epic, since it is dual to the monic equalizer $e$.
+
+
+\subsubsection{Example: Equivalence Relations in Set}
+
+Let's consider an equivalence relation $R \subseteq X\times X$. This gives us
+the diagram:
+
+$$\begin{tikzcd}
+  R \arrow[shift left=1]{r}{r_1} \arrow[shift right=1,swap]{r}{r_2} & X
+\end{tikzcd}$$
+
+where \tfarr{r_i}{R}{X} is defined as the projection:
+
+$$\begin{tikzcd}
+  R \arrow[hookrightarrow]{r} \arrow[swap]{ddr}{r_i} & X\times X \arrow{dd}{\pi_i} \\
+  & \\
+  & X
+\end{tikzcd}$$
+
+If we now take the equivalence projection \tfarr{p}{X}{X/R}, defined by $p(x)
+\mapsto [x]$, this forms a coequalizer for $r_1$ and $r_2$. For any
+\tfarr{f}{X}{Y}, iff $(x, x') \in R \implies f(x) = f(x')$, then the diagram
+
+$$\begin{tikzcd}
+  R \arrow[shift left=1]{r}{r_1} \arrow[shift right=1,swap]{r}{r_2}  & X
+  \arrow[swap]{ddr}{f} \arrow{r}{p} & X/R \arrow[dashed]{dd}{u} \\
+  & & \\
+  & & Y
+\end{tikzcd}$$
+
+commutes and there must exist some \tfarr{u}{X/R}{Y} such that $f(x) = up(x)$.
+
+\subsection{Exercises}
+
+\todo{exercises are to be done, but they're all MATH boooring}
+
+
+\section{Groups and Categories}
+
+"In logical terms, according to this point of view one can “model the theory of
+groups” in any category with finite products, not just Sets. Of course the same
+is true for other theories--like monoids and rings--given by operations and
+equations. Thus, for instance, one can also define the notion of a group in the
+lambda-calculus, since the category of types of the lambda-calculus also has
+finite products. Theories involving other logical operations like quantifiers
+can be modeled in categories having more structure than just finite products.
+Here we have a glimpse of so-called categorical semantics. Such semantics can be
+useful for theories that are not complete with respect to models in Sets, such
+as certain theories in intuitionistic logic."
+
 
 \end{document}
 
